@@ -1,6 +1,11 @@
 'use client';
 
-const Searchbar = ({ location, setLocation, router }) => {
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+const Searchbar = () => {
+  const router = useRouter();
+  const [location, setLocation] = useState('');
   return (
     <div className="text-left text-lg py-3 m-auto flex justify-center">
       <input
