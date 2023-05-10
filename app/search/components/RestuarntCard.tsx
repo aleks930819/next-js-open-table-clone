@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ReasturantCardType } from '../page';
 import Price from '../../components/Price';
+import Stars from '../../components/Stars';
 
 const RestuarntCard = ({ reasturant }: { reasturant: ReasturantCardType }) => {
   return (
@@ -13,7 +14,7 @@ const RestuarntCard = ({ reasturant }: { reasturant: ReasturantCardType }) => {
       <div className="pl-5">
         <h2 className="text-3xl">{reasturant.name}</h2>
         <div className="flex items-start">
-          <div className="flex mb-2">*****</div>
+          <Stars reviews={reasturant.reviews} />
           <p className="ml-2 text-sm">Awesome</p>
         </div>
         <div className="mb-9">
