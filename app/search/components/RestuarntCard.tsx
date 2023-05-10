@@ -1,15 +1,12 @@
 import Link from 'next/link';
+import { ReasturantCardType } from '../page';
 
-const RestuarntCard = () => {
+const RestuarntCard = ({ reasturant }: { reasturant: ReasturantCardType }) => {
   return (
     <div className="border-b flex pb-5">
-      <img
-        src="https://images.otstatic.com/prod1/49153814/2/medium.jpg"
-        alt=""
-        className="w-44 rounded"
-      />
+      <img src={reasturant.main_image} alt="" className="w-44 rounded" />
       <div className="pl-5">
-        <h2 className="text-3xl">Aiāna Restaurant Collective</h2>
+        <h2 className="text-3xl">{reasturant.name}</h2>
         <div className="flex items-start">
           <div className="flex mb-2">*****</div>
           <p className="ml-2 text-sm">Awesome</p>

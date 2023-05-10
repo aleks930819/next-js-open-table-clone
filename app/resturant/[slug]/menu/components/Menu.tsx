@@ -9,9 +9,11 @@ const Menu = ({ menu }: { menu: Item[] }) => {
           <h1 className="font-bold text-4xl">Menu</h1>
         </div>
         <div className="flex flex-wrap justify-between">
-          {menu.map((item) => (
-            <MenuCard key={item.id} item={item} />
-          ))}
+          {menu.length > 0 ? (
+            menu.map((item) => <MenuCard key={item.id} item={item} />)
+          ) : (
+            <p className="text-center">This restaurant does not have menu</p>
+          )}
         </div>
       </div>
     </main>

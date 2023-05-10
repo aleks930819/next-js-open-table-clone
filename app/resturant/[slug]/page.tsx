@@ -47,8 +47,8 @@ const ResturantDetails = async ({ params }: { params: { slug: string } }) => {
         <RestaurantNavbar slug={restaurant.slug} />
         <Title name={restaurant.name} />
         <Rating />
-        <Description description={restaurant.description} />
         <Images images={restaurant.images} />
+        <Description description={restaurant.description} />
         <Reviews />
       </div>
       <div className="w-[27%] relative text-reg">
