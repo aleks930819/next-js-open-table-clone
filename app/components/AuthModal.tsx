@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { useState, useCallback } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import AuthInput from './AuthInput';
@@ -16,10 +16,27 @@ const style = {
   p: 4,
 };
 
-export default function AuthModal({ isSignIn }: { isSignIn: Boolean }) {
-  const [open, setOpen] = React.useState(false);
+export default function AuthModal({ isSignIn }: { isSignIn: boolean }) {
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [inputs, setInputs] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    city: '',
+    password: '',
+  });
+
+  const handleChangeInput = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setInputs({ ...inputs, [name]: value });
+    },
+    [inputs]
+  );
 
   const signUpOrSignInButtonStyle = `${
     isSignIn ? 'bg-blue-400' : 'bg-white text-black border-black '
@@ -51,7 +68,11 @@ export default function AuthModal({ isSignIn }: { isSignIn: Boolean }) {
               <h2 className="text-2xl forn-light text-center">
                 {isSignIn ? 'Log  Into Your Account' : 'Create Your Account'}
               </h2>
-              <AuthInput />
+              <AuthInput
+                inputs={inputs}
+                handleChangeInput={handleChangeInput}
+                isSignIn={isSignIn}
+              />
             </div>
             <button
               type="button"
