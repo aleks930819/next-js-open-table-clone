@@ -1,7 +1,7 @@
 import Header from './components/Header';
 import SearchSideBar from './components/SearchSideBar';
 import RestuarntCard from './components/RestuarntCard';
-import { PrismaClient, Cuisine, Location, PRICE } from '@prisma/client';
+import { PrismaClient, Cuisine, Location, PRICE, Review } from '@prisma/client';
 const prisma = new PrismaClient();
 
 interface SearchParams {
@@ -18,6 +18,7 @@ export interface ReasturantCardType {
   price: PRICE;
   Cuisine: Cuisine | null;
   slug: string;
+  reviews: Review[];
 }
 
 const select = {
@@ -28,13 +29,16 @@ const select = {
   price: true,
   Cuisine: true,
   slug: true,
+  reviews: true,
 };
 
-const fetchRestaurantsByLocation = async (searchParams: SearchParams): Promise<ReasturantCardType[]> => {
+const fetchRestaurantsByLocation = async (
+  searchParams: SearchParams
+): Promise<ReasturantCardType[]> => {
   // TODO add better type
   const where: any = {};
 
-  if(searchParams.location) {
+  if (searchParams.location) {
     where.location = {
       name: {
         contains: searchParams.location.toLowerCase(),
@@ -42,7 +46,7 @@ const fetchRestaurantsByLocation = async (searchParams: SearchParams): Promise<R
     };
   }
 
-  if(searchParams.cuisine) {
+  if (searchParams.cuisine) {
     where.Cuisine = {
       name: {
         contains: searchParams.cuisine.toLowerCase(),
@@ -50,7 +54,7 @@ const fetchRestaurantsByLocation = async (searchParams: SearchParams): Promise<R
     };
   }
 
-  if(searchParams.price) {
+  if (searchParams.price) {
     where.price = searchParams.price;
   }
 
@@ -58,7 +62,6 @@ const fetchRestaurantsByLocation = async (searchParams: SearchParams): Promise<R
     where,
     select,
   });
-  
 };
 
 const fetchLocations = async () => {
