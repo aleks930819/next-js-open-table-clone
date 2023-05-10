@@ -35,11 +35,12 @@ model Restaurant {
   location    Location @relation(fields: [location_id], references: [id])
   Cuisine     Cuisine? @relation(fields: [cuisine_id], references: [id])
   cuisine_id  Int?
+  Review      Review[]
 }
 
 model Item {
   id            Int        @id @default(autoincrement())
-  name          String    
+  name          String
   price         String
   description   String
   restaurant_id Int
@@ -64,4 +65,30 @@ model Cuisine {
   updated_at DateTime @updatedAt
 
   Restaurant Restaurant[]
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  first_name String
+  last_name  String
+  city       String
+  email      String   @unique
+  phone      String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  Review     Review[]
+}
+
+model Review {
+  id            Int        @id @default(autoincrement())
+  first_name    String
+  last_name     String
+  text          String
+  rating        Int
+  restaurant_id Int
+  restaurant    Restaurant @relation(fields: [restaurant_id], references: [id])
+  user_id       Int
+  user          User       @relation(fields: [user_id], references: [id])
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @updatedAt
 }

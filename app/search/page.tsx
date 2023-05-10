@@ -31,6 +31,7 @@ const select = {
 };
 
 const fetchRestaurantsByLocation = async (searchParams: SearchParams): Promise<ReasturantCardType[]> => {
+  // TODO add better type
   const where: any = {};
 
   if(searchParams.location) {
