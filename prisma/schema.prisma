@@ -35,7 +35,7 @@ model Restaurant {
   location    Location @relation(fields: [location_id], references: [id])
   Cuisine     Cuisine? @relation(fields: [cuisine_id], references: [id])
   cuisine_id  Int?
-  Review      Review[]
+  reviews      Review[]
 }
 
 model Item {
@@ -76,7 +76,7 @@ model User {
   phone      String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  Review     Review[]
+  reviews     Review[]
 }
 
 model Review {
@@ -84,7 +84,7 @@ model Review {
   first_name    String
   last_name     String
   text          String
-  rating        Int
+  rating        Float
   restaurant_id Int
   restaurant    Restaurant @relation(fields: [restaurant_id], references: [id])
   user_id       Int
