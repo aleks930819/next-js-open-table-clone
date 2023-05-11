@@ -22,7 +22,7 @@ export default function useAvailabilities() {
     setLoading(true);
 
     try {
-      const response = await axios.get(`/api/restaurant/${slug}/availability`, {
+      const response = await axios.get(`http://localhost:3003/api/restaurant/${slug}/availability`, {
         params: {
           day,
           time,

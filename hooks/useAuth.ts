@@ -26,7 +26,7 @@ const useAuth = () => {
   const signin = async ({ email, password, handleClose }: SignIn) => {
     try {
       setAuthState({ loading: true, error: null, data: null });
-      const { data } = await axios.post('/api/auth/signin', {
+      const { data } = await axios.post('http://localhost:3003/api/auth/signin', {
         email,
         password,
       });
@@ -50,7 +50,7 @@ const useAuth = () => {
   }: SignUp) => {
     try {
       setAuthState({ loading: true, error: null, data: null });
-      const { data } = await axios.post('/api/auth/signup', {
+      const { data } = await axios.post('http://localhost:3003/api/auth/signup', {
         email,
         password,
         firstName,
