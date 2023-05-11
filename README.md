@@ -2,6 +2,7 @@
 
 - [About the Project](#about-the-project)
   - [Built With](#built-with)
+  - [Functionality](#functionality)
 
 ## About The Project
 
@@ -13,6 +14,6 @@ This project is a clone of the Open Table website. It is built with Next.js, Pri
 - [Prisma](https://www.prisma.io/)
 - [Material UI](https://material-ui.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
-- [Axios]
+- [Axios]('https://axios-http.com/')
 
 
