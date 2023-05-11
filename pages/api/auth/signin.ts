@@ -20,7 +20,7 @@ export default async function handler(
 
       {
         valid: validator.isLength(password, { min: 1 }),
-        errorMessage: 'Password is not strong enough',
+        errorMessage: 'Please enter a valid password',
       },
     ];
 
@@ -37,7 +37,7 @@ export default async function handler(
 
     if (!userWithEmail) {
       return res
-        .status(400)
+        .status(401)
         .json({ errors: [{ errorMessage: 'Wrong email or password!' }] });
     }
 
@@ -48,7 +48,7 @@ export default async function handler(
 
     if (!passwordMatch) {
       return res
-        .status(400)
+        .status(401)
         .json({ errors: [{ errorMessage: 'Wrong email or password!' }] });
     }
 
