@@ -1,16 +1,50 @@
 'use client';
 
-import { partySize } from '../../../../data';
+import { partySize, times } from '../../../../data';
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 
-
-const ReservationCard = () => {
+const ReservationCard = ({
+  openTime,
+  closeTime,
+}: {
+  openTime: string;
+  closeTime: string;
+}) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   const handleChangeDate = (date: Date | null) => {
     if (date) return setSelectedDate(date);
   };
+
+  const filterTimes = () => {
+    const timesInWindow: string[] = [];
+
+    let isWithinWindow = false;
+
+    times.forEach(({ time }) => {
+      if (time === openTime) {
+        isWithinWindow = true;
+      }
+
+      if (isWithinWindow) {
+        timesInWindow.push(time);
+      }
+
+      if (time === closeTime) {
+        isWithinWindow = false;
+      }
+    });
+
+    const formatTime = (time: string) => {
+      const [hours, minutes] = time.split(':');
+
+      return `${Number(hours)}:${minutes} ${Number(hours) > 12 ? 'PM' : 'AM'}`;
+    };
+
+    return timesInWindow.map((time) => formatTime(time));
+  };
+
   return (
     <div className="fixed w-[15%] bg-white rounded p-3 shadow">
       <div className="text-center border-b pb-2 font-bold">
@@ -25,12 +59,12 @@ const ReservationCard = () => {
         </select>
       </div>
       <div className="flex justify-between">
-        <div className="flex flex-col w-[48%]">
+        <div className="flex flex-col w-[20%]">
           <label htmlFor="">Date</label>
           <DatePicker
             className="py-3 border-b font-light text-reg w-28"
             dateFormat={'MMMM d'}
-            wrapperClassName='w-[48%]'
+            wrapperClassName="w-[20%]"
             selected={new Date()}
             onChange={handleChangeDate}
           />
@@ -38,8 +72,9 @@ const ReservationCard = () => {
         <div className="flex flex-col w-[48%]">
           <label htmlFor="">Time</label>
           <select name="" id="" className="py-3 border-b font-light">
-            <option value="">7:30 AM</option>
-            <option value="">9:30 AM</option>
+            {filterTimes().map((time) => (
+              <option value={time}>{time}</option>
+            ))}
           </select>
         </div>
       </div>
