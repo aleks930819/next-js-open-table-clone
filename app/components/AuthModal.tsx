@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import AuthInput from './AuthInput';
@@ -18,6 +18,7 @@ const style = {
 
 export default function AuthModal({ isSignIn }: { isSignIn: boolean }) {
   const [open, setOpen] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -37,6 +38,16 @@ export default function AuthModal({ isSignIn }: { isSignIn: boolean }) {
     },
     [inputs]
   );
+
+  useEffect(() => {
+    if (isSignIn) {
+      return inputs.password && inputs.email
+        ? setDisabled(false)
+        : setDisabled(true);
+    }
+    const isDisabled = Object.values(inputs).some((v) => v === '');
+    setDisabled(isDisabled);
+  }, [inputs]);
 
   const signUpOrSignInButtonStyle = `${
     isSignIn ? 'bg-blue-400 text-white' : 'bg-white text-black border-black '
@@ -76,7 +87,8 @@ export default function AuthModal({ isSignIn }: { isSignIn: boolean }) {
             </div>
             <button
               type="button"
-              className="bg-red-600 text-white p-2 px-4 rounded mt-2 w-full"
+              className="bg-red-600 text-white p-2 px-4 rounded mt-2 w-full disabled:opacity-60"
+              disabled={disabled}
             >
               {isSignIn ? 'Sign In' : 'Sign Up'}
             </button>

@@ -62,6 +62,7 @@ const AuthInput = ({ inputs, handleChangeInput, isSignIn }: Props) => {
             className="border rounded p-2 py-4 w-[49%]"
             placeholder="City"
             value={city}
+            name="city"
             onChange={handleChangeInput}
           />
         </div>
