@@ -85,4 +85,6 @@ export default async function handler(
       token,
     });
   }
+
+  return res.status(400).json({ message: 'Invalid endpoint' });
 }
