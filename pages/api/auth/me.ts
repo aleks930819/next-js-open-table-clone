@@ -42,5 +42,14 @@ export default async function handler(
     return res.status(401).json({ errors: [{ errorMessage: 'Unauthorized' }] });
   }
 
-  return res.status(200).json({ user: user });
+  return res.status(200).json({
+    id: user.id,
+    email: user.email,
+    firstName: user.first_name,
+    lastName: user.last_name,
+    city: user.city,
+    phone: user.phone,
+    createdAt: user.created_at,
+    updatedAt: user.updated_at,
+  });
 }

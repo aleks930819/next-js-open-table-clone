@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import { useState, useContext } from 'react';
 import { AuthenticationContext } from '../app/context/AuthContext';
+import { getCookie, removeCookies } from 'cookies-next';
 
 interface SignIn {
   email: string;
@@ -66,9 +67,16 @@ const useAuth = () => {
     }
   };
 
+  const signout = async () => {
+    removeCookies('jwt');
+    setAuthState({ loading: false, error: null, data: null });
+  };
+
+
   return {
     signin,
     signup,
+    signout,
   };
 };
 

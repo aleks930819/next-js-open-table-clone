@@ -11,9 +11,9 @@ export default function RootLayout({
     <html lang="en">
       <head />
       <body>
-        <main className="bg-gray-100 min-h-screen w-screen overflow-hidden">
+        <main className="bg-gray-100 min-h-screen w-screen">
           <AuthContext>
-            <main className="m-auto bg-white">
+            <main className="m-auto bg-white w-screen">
               <Navbar />
               {children}
             </main>
