@@ -1,10 +1,12 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useContext } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import AuthInput from './AuthInput';
 import useAuth from '../../hooks/useAuth';
+import { AuthenticationContext } from '../context/AuthContext';
+import CircleLoading from './CircleLoading';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -23,6 +25,7 @@ export default function AuthModal({ isSignIn }: { isSignIn: boolean }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { signin, signup } = useAuth();
+  const { loading, data, error } = useContext(AuthenticationContext);
 
   const [inputs, setInputs] = useState({
     firstName: '',
@@ -52,7 +55,9 @@ export default function AuthModal({ isSignIn }: { isSignIn: boolean }) {
   }, [inputs]);
 
   const handleClick = () => {
-    isSignIn ? signin({email:inputs.email,password:inputs.password}) : null;
+    isSignIn
+      ? signin({ email: inputs.email, password: inputs.password })
+      : null;
   };
 
   const signUpOrSignInButtonStyle = `${
@@ -74,33 +79,37 @@ export default function AuthModal({ isSignIn }: { isSignIn: boolean }) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <div className="p-2 h-[600px]">
-            <div className="uppercase font-bold text-center pb-2 border-bottom mb-2 border-b-2">
-              <p className="text-sm">
-                {isSignIn ? 'Sign In' : 'Sign Up'} to OpenTable
-              </p>
+        {loading ? (
+          <CircleLoading />
+        ) : (
+          <Box sx={style}>
+            <div className="p-2 h-[600px]">
+              <div className="uppercase font-bold text-center pb-2 border-bottom mb-2 border-b-2">
+                <p className="text-sm">
+                  {isSignIn ? 'Sign In' : 'Sign Up'} to OpenTable
+                </p>
+              </div>
+              <div className="m-auto">
+                <h2 className="text-2xl forn-light text-center">
+                  {isSignIn ? 'Log  Into Your Account' : 'Create Your Account'}
+                </h2>
+                <AuthInput
+                  inputs={inputs}
+                  handleChangeInput={handleChangeInput}
+                  isSignIn={isSignIn}
+                />
+              </div>
+              <button
+                type="button"
+                className="bg-red-600 text-white p-2 px-4 rounded mt-2 w-full disabled:opacity-60"
+                disabled={disabled}
+                onClick={handleClick}
+              >
+                {isSignIn ? 'Sign In' : 'Sign Up'}
+              </button>
             </div>
-            <div className="m-auto">
-              <h2 className="text-2xl forn-light text-center">
-                {isSignIn ? 'Log  Into Your Account' : 'Create Your Account'}
-              </h2>
-              <AuthInput
-                inputs={inputs}
-                handleChangeInput={handleChangeInput}
-                isSignIn={isSignIn}
-              />
-            </div>
-            <button
-              type="button"
-              className="bg-red-600 text-white p-2 px-4 rounded mt-2 w-full disabled:opacity-60"
-              disabled={disabled}
-              onClick={handleClick}
-            >
-              {isSignIn ? 'Sign In' : 'Sign Up'}
-            </button>
-          </div>
-        </Box>
+          </Box>
+        )}
       </Modal>
     </div>
   );

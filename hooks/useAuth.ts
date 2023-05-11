@@ -1,10 +1,12 @@
 import axios from 'axios';
 
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AuthenticationContext } from '../app/context/AuthContext';
 
 const useAuth = () => {
-  const [auth, setAuth] = useState(false);
-  const [user, setUser] = useState(null);
+  const { data, error, loading, setAuthState } = useContext(
+    AuthenticationContext
+  );
 
   const signin = async ({
     email,
@@ -14,27 +16,22 @@ const useAuth = () => {
     password: string;
   }) => {
     try {
+      setAuthState({ loading: true, error: null, data: null });
       const { data } = await axios.post('/api/auth/signin', {
         email,
         password,
       });
 
-      if (data) {
-        setAuth(true);
-        setUser(data);
-      }
-
-      return data;
+      setAuthState({ loading: false, error: null, data });
     } catch (err: any) {
-      return err.response.data;
+      const error = err.response.data.errors[0].errorMessage;
+      setAuthState({ loading: false, error, data: null });
     }
   };
 
   const signup = async () => {};
 
   return {
-    auth,
-    user,
     signin,
     signup,
   };
