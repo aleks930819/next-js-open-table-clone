@@ -57,8 +57,16 @@ export default function AuthModal({ isSignIn }: { isSignIn: boolean }) {
 
   const handleClick = () => {
     isSignIn
-      ? signin({ email: inputs.email, password: inputs.password })
-      : null;
+      ? signin({ email: inputs.email, password: inputs.password, handleClose })
+      : signup({
+          email: inputs.email,
+          password: inputs.password,
+          handleClose,
+          firstName: inputs.firstName,
+          lastName: inputs.lastName,
+          phone: inputs.phone,
+          city: inputs.city,
+        });
   };
 
   const signUpOrSignInButtonStyle = `${
@@ -85,11 +93,11 @@ export default function AuthModal({ isSignIn }: { isSignIn: boolean }) {
         ) : (
           <Box sx={style}>
             <div className="p-2 h-[600px]">
-              {error && (
+              {error ? (
                 <Alert severity="error" className="mb-2">
                   {error}
                 </Alert>
-              )}
+              ) : null}
               <div className="uppercase font-bold text-center pb-2 border-bottom mb-2 border-b-2">
                 <p className="text-sm">
                   {isSignIn ? 'Sign In' : 'Sign Up'} to OpenTable
