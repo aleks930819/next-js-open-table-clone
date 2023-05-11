@@ -15,14 +15,6 @@ export default async function handler(
     return res.status(401).json({ errors: [{ errorMessage: 'Unauthorized' }] });
   }
 
-  const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-
-  try {
-    await jose.jwtVerify(bearerToken, secret);
-  } catch (err) {
-    return res.status(401).json({ errors: [{ errorMessage: 'Unauthorized' }] });
-  }
-
   const decodedToken = jwt.decode(bearerToken) as { email: string };
 
   if (!decodedToken.email) {
