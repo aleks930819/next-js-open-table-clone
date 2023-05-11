@@ -12,7 +12,7 @@ const RestaurantCard = ({ restaurant }: Props) => {
   const renderRatingText = () => {
     const rating = calculateAvarageReviewsRating(restaurant.reviews);
 
-    if (Number(rating) === 0) return 'No reviews yet';
+    if (Number(rating) === 0) return '';
 
     if (Number(rating) < 2) return 'Averge';
 

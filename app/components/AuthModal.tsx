@@ -39,8 +39,8 @@ export default function AuthModal({ isSignIn }: { isSignIn: boolean }) {
   );
 
   const signUpOrSignInButtonStyle = `${
-    isSignIn ? 'bg-blue-400' : 'bg-white text-black border-black '
-  } text-white border p-1 px-4 rounded ${isSignIn ? 'mr-2' : ''}`;
+    isSignIn ? 'bg-blue-400 text-white' : 'bg-white text-black border-black '
+  }  border p-1 px-4 rounded ${isSignIn ? 'mr-2' : ''}`;
 
   return (
     <div>
